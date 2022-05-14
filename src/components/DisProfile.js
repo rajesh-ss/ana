@@ -47,8 +47,8 @@ const DisProfile = (props)=>{
                         <img  src = {imgProfile} alt=""/>
                         <div className="position-relative">
                             <h5 className="mb-6 text-primary font-weight-semi-bold">ID: {id}</h5> 
-                            <h5 className="text-uppercase text-primary mb-6">First Name: {fName }</h5>
-                            <h5 className="text-uppercase text-primary mb-6">Last Name: {lName}</h5>
+                            <h5 className="text-uppercase text-primary mb-6">Shop name: {fName }</h5>
+                            <h5 className="text-uppercase text-primary mb-6">address: {lName}</h5>
                             <h5 className="text-uppercase text-primary mb-6">Email: {email }</h5>
                             <h5 className="text-uppercase text-primary mb-6">Phone: {phone }</h5>
                         </div>

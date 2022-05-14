@@ -44,8 +44,8 @@ const Signup = () => {
 
 
     //setch(JSON.stringify(location.coordinates.lng));
-    setLongitude(JSON.stringify(location.coordinates.lng));
-    setLatitude(JSON.stringify(location.coordinates.lat));
+    //setLongitude(JSON.stringify(location.coordinates.lng));
+    //setLatitude(JSON.stringify(location.coordinates.lat));
 
 
     Axios.post("http://localhost:3001/register", {
@@ -100,7 +100,7 @@ const Signup = () => {
                 <input
                   type="text"
                   className="form-control border-white p-4 px-3"
-                  placeholder="Enter you first name"
+                  placeholder="Enter you shop name"
                   onChange={(e) => {
                     setFirstName(e.target.value);
                   }}
@@ -110,7 +110,7 @@ const Signup = () => {
                 <input
                   type="text"
                   className="form-control border-white p-4 px-3"
-                  placeholder="Enter your last name"
+                  placeholder="Enter your seller name"
                   onChange={(e) => {
                     setLastName(e.target.value);
                   }}
@@ -121,7 +121,7 @@ const Signup = () => {
                 <input
                   type="text"
                   className="form-control border-white p-4 px-3"
-                  placeholder="Enter user name"
+                  placeholder="Enter your address"
                   onChange={(e) => {
                     setUsrName(e.target.value);
                   }}
