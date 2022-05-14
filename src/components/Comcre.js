@@ -12,17 +12,17 @@ import useGeoLocation from "../geoLocation/useGeoLocation";
 
  
 
-const Signup = () => {
+const Comcre = () => {
   // states for inputs from register
 
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [comName, setcomName] = useState("");
+  const [comAddr, setcomAddr] = useState("");
   const [psw, setpasw] = useState("");
   const [repsw, setrepsw] = useState("");
   const [email, setEmail] = useState("");
   const [ph, setPh] = useState("");
-  const [usrName, setUsrName] = useState("");
+  const [communityid, setcommunityid] = useState("");
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
   const [loSta, setlocStatus] = useState("");
@@ -33,13 +33,13 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
-  /*     console.log(firstName);
-    console.log(lastName);
+  /*     console.log(comName);
+    console.log(comAddr);
     console.log(psw);
     console.log(repsw);
  */
 
-  const register = () => {
+  const com = () => {
     //const resp = 0;
 
 
@@ -48,13 +48,14 @@ const Signup = () => {
     setLatitude(JSON.stringify(location.coordinates.lat));
 
 
-    Axios.post("http://localhost:3001/register", {
-      firstName: firstName,
-      lastName: lastName,
+    Axios.post("http://localhost:3001/createCommunity", {
+        
+      comName: comName,
+      comAddr: comAddr,
       password: psw,
       email: email,
       phone: ph,
-      userName: usrName,
+      communityid: communityid,
       longitude: longitude,
       latitude: latitude
 
@@ -67,20 +68,13 @@ const Signup = () => {
         }
     }
     else{
-        
-
       if (response.data.sqlMessage.includes("Duplicate")) {
         alert("user name exists, try different user name");
       }
-    
       else{
         navigate('/');
       }
     }
-      //console.log(response.data.sqlMessage.includes("Duplicate"));
-
-
-     
     });
   };
 
@@ -91,7 +85,7 @@ const Signup = () => {
           <div className="col-md-6 col-12 py-5">
             <div className="text-center mb-2 pb-2">
               <h2 className="section-title px-5 mb-3">
-                <span className="bg-secondary px-2">REGISTER</span>
+                <span className="bg-secondary px-2">Enter communities details</span>
               </h2>
             </div>
 
@@ -100,19 +94,20 @@ const Signup = () => {
                 <input
                   type="text"
                   className="form-control border-white p-4 px-3"
-                  placeholder="Enter you first name"
+                  placeholder="Enter community name"
                   onChange={(e) => {
-                    setFirstName(e.target.value);
+                    setcomName(e.target.value);
                   }}
                 />
               </div>
               <div className="input-group py-2">
+
                 <input
                   type="text"
                   className="form-control border-white p-4 px-3"
-                  placeholder="Enter your last name"
+                  placeholder="Enter community address"
                   onChange={(e) => {
-                    setLastName(e.target.value);
+                    setcomAddr(e.target.value);
                   }}
                 />
               </div>
@@ -121,9 +116,9 @@ const Signup = () => {
                 <input
                   type="text"
                   className="form-control border-white p-4 px-3"
-                  placeholder="Enter user name"
+                  placeholder="Enter community ID"
                   onChange={(e) => {
-                    setUsrName(e.target.value);
+                    setcommunityid(e.target.value);
                   }}
                 />
               </div>
@@ -183,9 +178,9 @@ const Signup = () => {
             <div className="input-group-append justify-content-md-center">
               <button
                 className="btn btn-primary px-xl-5 rounded-sm"
-                onClick={register}
+                onClick={com}
               >
-                Register
+                create community
               </button>
             </div>
           </div>
@@ -195,4 +190,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Comcre;

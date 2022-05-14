@@ -10,6 +10,7 @@ import { Navbar, Nav, NavDropdown, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import "@popperjs/core";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 {/*         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
           <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -23,6 +24,10 @@ import { Link } from 'react-router-dom';
 
 const NavBar = () => {
 
+
+    const navigate = useNavigate();
+
+    
     return (
         <>
 
@@ -32,8 +37,8 @@ const NavBar = () => {
                         <Navbar.Toggle aria-controls="basic-navbar-nav " />
                         <Navbar.Collapse id="basic-navbar-nav " >
                             <Nav className="me-auto flex-grow-1  pb-0  mb-0" >
-                               <Nav.Link href="#" className="text-truncate mb-3  mt-0 mt-lg-0 mx-sm-auto mx-lg-0 pb-0" > Profile</Nav.Link>
-                                <Nav.Link href="#" className="text-truncate mb-3   mx-sm-auto mx-lg-1  pb-0 ">History</Nav.Link>
+                               <Nav.Link href="/" className="text-truncate mb-3  mt-0 mt-lg-0 mx-sm-auto mx-lg-0 pb-0" to="/profile"> Profile</Nav.Link>
+                                <Nav.Link href="/community" className="text-truncate mb-3   mx-sm-auto mx-lg-1  pb-0 "to="/login">community</Nav.Link>
                                 <Nav.Link href="#" className="text-truncate mb-3   mx-sm-auto mx-lg-1  pb-0">Cart</Nav.Link>
                                 <Nav.Link href="#" className="text-truncate mb-3   mx-sm-auto mx-lg-1  pb-0">Checkout</Nav.Link>
                             </Nav>

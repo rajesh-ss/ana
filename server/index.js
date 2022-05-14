@@ -49,6 +49,12 @@ app.post("/register", (req, res) => {
   const psw = req.body.password;
   const userName = req.body.userName;
   const id = Math.floor(Math.random() * 11);
+  const lat = req.body.latitude;
+  const lon = req.body.longitude;
+
+  console.log(lat);
+  console.log(lon);
+
 
   bcrypt.hash(psw, saltRounds, (err, hash) =>{
 
@@ -57,8 +63,8 @@ app.post("/register", (req, res) => {
     }
 
     db.query(
-      "INSERT INTO User_T (id, fName, lName, userName, email, phone, password) VALUES (?,?,?,?,?,?,?)",
-      [id, fName, lName, userName,email, ph ,hash],
+      "INSERT INTO User_M (id, fName, lName, userName, email, phone, password, lat, lon) VALUES (?,?,?,?,?,?,?,?,?)",
+      [id, fName, lName, userName,email, ph ,hash, lat, lon],
       (err, result) => {
         if (err) {
           res.send(err);
@@ -72,6 +78,50 @@ app.post("/register", (req, res) => {
 
 
 });
+
+//createCommunity
+app.post("/createCommunity", (req, res) => {
+
+  const comName = req.body.comName;
+  const comAddr = req.body.comAddr;
+  const password = req.body.password;
+  const phone = req.body.phone;
+  const psw = req.body.password;
+  const email = req.body.email;
+  const communityid = req.body.communityid;
+  const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
+
+    db.query(
+      "INSERT INTO communities (comName, comAddr, psw, email, phone, community_ID, lat, lon) VALUES (?,?,?,?,?,?,?,?)",
+      [comName, comAddr, psw, email, phone, communityid , latitude, longitude],
+      (err, result) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send("Values Inserted");
+        } 
+      }
+    );
+
+  });
+
+  app.get('/joincommunity', (req, res)=>{
+
+    db.query( 
+      "select * from  communities ",
+      (err, result) => {
+  
+        if (err) {
+          res.send({err: err}); 
+        } 
+        else{
+          res.send(result);
+        }
+      })
+
+  });
+
 
 
 app.get('/login', (req, res)=>{
@@ -93,30 +143,31 @@ app.post("/login", (req, res) => {
   const psw = req.body.password;
  // const userName = req.body.userName;
 
-  db.query(
+  db.query( 
 
-    "select * from  User_T where email = ?;",
+    "select * from  User_M where email = ?;",
     email,
     (err, result) => {
 
       if (err) {
         res.send({err: err}); 
       } 
+      else{
           if(result.length >0){
 
             bcrypt.compare(psw, result[0].password,(error, response) =>{
               if(response){
 
                 req.session.user = result;
-                //res.send({loggedIn: true, user:req.session.user})
+                res.send({loggedIn: true, user:req.session.user})
                 console.log(req.session.user);
 
                 const id = result[0].id;
-                //const token = jwt.sign(); 
+          
 
 
 
-                res.send(result);
+                //res.send(result);
               }
               else{
 
@@ -133,10 +184,84 @@ app.post("/login", (req, res) => {
           }
    
         
-     
+        }
     }
   );
 });
+
+
+app.get('/profile', (req, res)=>{
+
+    console.log();
+    //res.send(req.session.user);
+
+    db.query( 
+
+      "select * from  User_M where userName = ?;",
+      req.session.user[0].userName,
+      (err, result) => {
+  
+        if (err) {
+          res.send({err: err}); 
+        } 
+        else{
+          res.send(result);
+        }
+      })
+});
+
+
+
+
+app.post("/profile", (req, res) => {
+
+  const email = req.body.email;
+  const psw = req.body.password;
+ // const userName = req.body.userName;
+
+  db.query( 
+
+    "select * from  User_M where email = ?;",
+    email,
+    (err, result) => {
+
+      if (err) {
+        res.send({err: err}); 
+      } 
+      else{
+          if(result.length >0){
+
+            bcrypt.compare(psw, result[0].password,(error, response) =>{
+              if(response){
+
+                req.session.user = result;
+                res.send({loggedIn: true, user:req.session.user})
+                console.log(req.session.user);
+
+                const id = result[0].id;
+              }
+              else{
+
+                res.send({message: "Wrong username/password combination"});
+                //res.send({loggedIn: false});
+          
+              }
+
+            });
+  
+          }
+          else{
+            res.send({message: "user doesn't exist"});
+          }
+   
+        
+        }
+    }
+  );
+});
+
+
+
 
 app.get("/employees", (req, res) => {
   db.query("SELECT * FROM employees", (err, result) => {

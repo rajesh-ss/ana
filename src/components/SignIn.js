@@ -6,8 +6,12 @@ import "bootstrap";
 import 'jquery/dist/jquery.slim';
 import "@popperjs/core";
 import Axios from 'axios';
+import useGeoLocation from "../geoLocation/useGeoLocation";
+import { useNavigate } from 'react-router-dom';
 
-const SignIn = () => {
+
+
+const SignIn = (props) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -15,7 +19,12 @@ const SignIn = () => {
     const [loginStatus, setLoginStatus] = useState("");
 
     Axios.defaults.withCredentials = true;
+
+    const location = useGeoLocation();
+
+    const [usr, setUsr] = useState("");
    
+    const navigate = useNavigate();
   
 
     const Login = ()=>{
@@ -33,9 +42,15 @@ const SignIn = () => {
                 alert(response.data.message);
             }
             else{
-                setLoginStatus(response.data[0].userName);
+                
+                alert("Welcome "+JSON.stringify(response.data.user[0].userName));
 
-                alert("Welcome "+response.data[0].userName);
+                //setLoginStatus(response.data.userName);
+                //setUsr(response.data.userName);
+                props.unam(JSON.stringify(response.data.user[0].userName));
+                
+                navigate('/');
+
             }
         });
     };
@@ -90,7 +105,7 @@ const SignIn = () => {
                             onClick={Login}>sign in</button>
                         </div>
                         
-                       <h1>{loginStatus}</h1> 
+                       {/* <h1>{loginStatus}</h1>  */}
                     </div>
                 </div>
         </div>
